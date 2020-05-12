@@ -3,6 +3,7 @@ import 'icon_content.dart';
 import 'reusable_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
+import 'round_icon.dart';
 
 enum Gender { male, female }
 
@@ -14,6 +15,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   int height = 180;
+  int weight = 60;
+  int age = 19;
 
   @override
   Widget build(BuildContext context) {
@@ -81,25 +84,104 @@ class _InputPageState extends State<InputPage> {
                     )
                   ],
                 ),
-                Slider(
-                    value: height.toDouble(),
-                    activeColor: Color(0xFFEB1555),
-                    inactiveColor: Color(0xFF8D8E98),
-                    min: 120.0,
-                    max: 220.0,
-                    onChanged: (double newValue) {
-                      setState(() {
-                        height = newValue.round();
-                      });
-                    })
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    inactiveTickMarkColor: Color(0xFF8D8E98),
+                    activeTrackColor: Colors.white, // cor da linha
+                    thumbColor: Color(0xFFEB1555), // cor da bolinha
+                    overlayColor:
+                        Color(0x29EB1555), // sobreposição com alpha de 29
+                    thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 15.0), // tamanho bolinha
+                    overlayShape: RoundSliderOverlayShape(
+                        overlayRadius: 30.0), // tamanho linha
+                  ),
+                  child: Slider(
+                      value: height.toDouble(),
+                      min: 120.0,
+                      max: 220.0,
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.round();
+                        });
+                      }),
+                )
               ],
             ),
           )),
           Expanded(
               child: Row(
             children: <Widget>[
-              Expanded(child: ReusableCard(colour: kActiveCardColour)),
-              Expanded(child: ReusableCard(colour: kActiveCardColour)),
+              Expanded(
+                  child: ReusableCard(
+                colour: kActiveCardColour,
+                cardChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('WEIGHT', style: kLabelTextStyle),
+                    Text(weight.toString(), style: kNumberTextStyle),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.minus,
+                          onPressed: () {
+                            setState(() {
+                              weight == 0 ? weight = 0 : weight--;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.plus,
+                          onPressed: () {
+                            setState(() {
+                              weight++;
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+              Expanded(
+                  child: ReusableCard(
+                colour: kActiveCardColour,
+                cardChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('AGE', style: kLabelTextStyle),
+                    Text(age.toString(), style: kNumberTextStyle),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.minus,
+                          onPressed: () {
+                            setState(() {
+                              age == 0 ? age = 0 : age--;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.plus,
+                          onPressed: () {
+                            setState(() {
+                              age++;
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )),
             ],
           )),
           Container(
