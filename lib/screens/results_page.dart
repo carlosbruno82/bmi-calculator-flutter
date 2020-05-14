@@ -4,6 +4,15 @@ import '../components/reusable_card.dart';
 import '../components/bottom_button.dart';
 
 class ResultsPage extends StatelessWidget {
+  final String bmiResult;
+  final String resultText;
+  final String interpretation;
+
+  ResultsPage(
+      {@required this.bmiResult,
+      @required this.resultText,
+      @required this.interpretation});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +26,12 @@ class ResultsPage extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(15.0),
-              alignment: Alignment.bottomLeft,
+                padding: EdgeInsets.all(15.0),
+                alignment: Alignment.bottomLeft,
                 child: Text(
-              'You Result',
-              style: kTitleTextStyle,
-            )),
+                  'You Result',
+                  style: kTitleTextStyle,
+                )),
           ),
           Expanded(
             flex: 5,
@@ -32,16 +41,20 @@ class ResultsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text('Normal', style: kResultTextStyle),
-                  Text('18.3', style: kBMITextStyle),
-                  Text('Your BMI result is quite low, you should eat more', textAlign: TextAlign.center, style: kBodyTextStyle)
+                  Text(resultText.toUpperCase(), style: kResultTextStyle),
+                  Text(bmiResult, style: kBMITextStyle),
+                  Text(interpretation,
+                      textAlign: TextAlign.center, style: kBodyTextStyle)
                 ],
               ),
             ),
           ),
-          BottomButton(buttonTitle: 'RE-CALCULATE', onTap: () {
-            Navigator.pop(context);
-          },)
+          BottomButton(
+            buttonTitle: 'RE-CALCULATE',
+            onTap: () {
+              Navigator.pop(context);
+            },
+          )
         ],
       ),
     );
